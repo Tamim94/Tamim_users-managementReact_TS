@@ -1,14 +1,20 @@
 import React, { useCallback, useEffect, useState } from "react";
 import DashboardLayout from "../layouts/Dashboard";
-import { Avatar, Box, Card, Stack, TextField, Typography } from "@mui/material";
-import { useParams } from "react-router-dom";
+import {Alert, Avatar, Box, Card, Stack, TextField, Typography} from "@mui/material";
+import { useParams,useNavigate } from "react-router-dom";
 import { User } from "../types/User";
 import { usersApi } from "../API/users-api";
 import Button from "@mui/material/Button";
+import {Error} from "../types/Error";
 
 const UserDetails: React.FC = () => {
+    let navigate = useNavigate();
     const { id } = useParams();
     const [isEditUser, setIsEditUser] = useState(false);
+    const [errorObj,setErrorObj] = useState<Error>({
+     error:false,
+     message:'',
+    });
 
     const [user, setUser] = useState<User>({
         email: "",
@@ -18,19 +24,40 @@ const UserDetails: React.FC = () => {
         role: "",
     });
 
-    const handleEditUser = () => {
+    const handleEditUser = async () => {
         setIsEditUser((prevIsEditUser) => !prevIsEditUser);
+        if (isEditUser && user.id) {
+            try {
+               const userResponse = await usersApi.updateUser(user.id,user);
+              if('error' in userResponse && userResponse.error) {
+                  setErrorObj({
+                      error: userResponse.error,
+                      message: userResponse.message
+                  });
+
+              }
+            } catch(e){
+                console.log('testttttttttttt')
+
+            }
+            await usersApi.updateUser(user.id, user);
+        }
         console.log("Edit clicked");
     };
 
-    const handleDeleteUser = () => {
-        console.log("Delete clicked");
+    const handleDeleteUser = async () => {
+        if (user.id) {
+            await usersApi.deleteUser(user.id);
+            console.log("Delete clicked");
+            navigate('/users');
+        }
+
     };
 
     const getUser = useCallback(async () => {
         if (id) {
             try {
-                const userResponse = await usersApi.getUsersById(id);
+                const userResponse = await usersApi.getUserById(id);
                 setUser(userResponse);
             } catch (error) {
                 console.error("Error fetching user details:", error);
@@ -47,6 +74,12 @@ const UserDetails: React.FC = () => {
             <Box display="flex" justifyContent="center">
                 <Stack display="flex" justifyContent="center" margin="auto">
                     <Stack spacing={2}>
+                        {
+                            errorObj.error &&(
+                                <Alert severity={"error"}>{errorObj.message}</Alert>
+                            )
+                        }
+
                         <Card
                             sx={{
                                 width: 500,

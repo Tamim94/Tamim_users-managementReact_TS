@@ -12,7 +12,8 @@ const DashboardLayout = ({children}:Props): JSX.Element => {
         <Box><TopBar/>
             <Box
                 sx = {{
-                    marginTop:15
+                    marginTop:5,
+                    height: 'auto'
                 }}
             >
             </Box>

@@ -5,13 +5,31 @@ import UsersCard from '../components/UsersCard';
 import { usersApi } from "../API/users-api";
 import {User} from "../types/User";
 import DashboardLayout from "../layouts/Dashboard";
+import Button from "@mui/material/Button";
+import {Create} from "@mui/icons-material";
+import CreateUserDialog from "../components/CreateUserDialog";
+
 
 interface UserCardProps {
     user: User;
 }
-
+const handleCreateUser = () => {
+    console.log("Create user");
+};
 const Users = (): JSX.Element => {
     const [users, setUsers] = useState<User[]>([]);
+    const [OpenUserDialog,setOpenUserDialog]=useState<boolean>(false);
+    const handleOpenUserDialog=()=>{
+        setOpenUserDialog(true);
+    }
+    const handleCloseUserDialog=(action?:string,user?:User)=>{
+        if(action==='created' && user){
+            setUsers([...users,user as User]);
+
+
+        }
+        setOpenUserDialog(false);
+    }
 
     const getUsers = useCallback(async () => {
         try {
@@ -36,7 +54,24 @@ const Users = (): JSX.Element => {
                 <Grid container spacing={4}>
                     <Grid item md={2} />
                     <Grid item>
-                        <Grid item container md={8} spacing={2}> {}
+                        <Grid item container md={8}
+                              spacing={2}
+                        display={"flex"}
+                        justifyContent={"center"}>
+                            <Grid item container
+                            md={12}xs={12}
+                            display={"flex"}
+                            justifyContent={"center"}>
+                                <Button
+                                    variant="contained"
+                                    onClick={handleOpenUserDialog}
+
+                                    sx={{ backgroundColor: "red" }}
+                                >
+                                    Create
+                                </Button>
+                            </Grid>
+
                             {users.map((user, index) => (
                                 <Grid item key={user.id}> {}
                                     <UsersCard user={user} />
@@ -47,6 +82,9 @@ const Users = (): JSX.Element => {
                     </Grid>
                 </Grid>
             </Box>
+            <CreateUserDialog open={OpenUserDialog} onClose={handleCloseUserDialog}/>
+
+
         </DashboardLayout>
 
     );

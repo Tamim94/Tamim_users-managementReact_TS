@@ -25,7 +25,7 @@ const UserCard = ({ user }: UserCardProps): JSX.Element => {
                         sx={{ ml: -2, width: 70, height: 70 }}
                         src={user.avatar}
                     >
-                        {user.name.charAt(0).toUpperCase()} {}
+                        {user && user.name && user.name.charAt(0).toUpperCase()}
                     </Avatar>
                     <Stack direction="column" spacing={1}>
                         <Typography variant="h5" component="div">
@@ -38,7 +38,7 @@ const UserCard = ({ user }: UserCardProps): JSX.Element => {
                             {user.email}
                         </Typography>
                         <Typography variant="body2">
-                           wtffffffffffffffffffffff
+
                         </Typography>
                     </Stack>
                 </Stack>
