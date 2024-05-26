@@ -1,4 +1,3 @@
-
 ## I. Mon environnement de dev: 
 IDE : IntelliJ IDEA Ultimate 2024.1
 OS : Windows 10 Pro
