@@ -1,5 +1,4 @@
 
-////////////////////////////////////////////////////////////////
 ## I. Mon environnement de dev: 
 IDE : IntelliJ IDEA Ultimate 2024.1
 OS : Windows 10 Pro
@@ -17,7 +16,7 @@ Ensuite vous normalement vos verrez des erreurs ce qui est normal il faudra alle
 Vous pourrez lancer le projet avec npm start.
 Vous pourrez voir le projet sur localhost:3000. ( le port par default de react ) si vous avez des probleme de port vous pouvez faire un show netstate sur powershell et kill le proccessus qui utilise le port 3000 (ou tout simplement react vous proposera d'utilisait un autre port ).
 
-////////////////////////////////////////////////////////////////
+
 ## II.Ce que chaque directory font : 
 src/views : Ce répertoire contient toutes les  pages de l'application.
 src/components : Ce répertoire contient tous les composants réutilisables.
@@ -44,7 +43,7 @@ On peut cree , update et delete les utilisateur dans la page home et on peut voi
 golam.tamim94@gmail.com
 
 
-////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
 Documentation par defaut de react : # Getting Started with Create React App
