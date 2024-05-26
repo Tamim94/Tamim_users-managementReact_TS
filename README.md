@@ -1,11 +1,18 @@
 ## I. Mon environnement de dev: 
 IDE : IntelliJ IDEA Ultimate 2024.1
+
 OS : Windows 10 Pro
+
 nodeJS : v20.12.1
+
 npm : 10.5.0
+
 React : 18.3.1
+
 TypeScript 5.4.5
+
 API : https://fakeapi.platzi.com/en/rest/users/
+
 Library : material-ui/core // idk what version tho 
 
 Pour installer le projet si vous etes sur IntelliJ IDEA, il suffit de cloner le projet et de l'ouvrir avec IntelliJ IDEA en appuyant sur get projet from VCS et le lien du lien repo dessus pour le cloner / pull. 
@@ -18,14 +25,23 @@ Vous pourrez voir le projet sur localhost:3000. ( le port par default de react )
 
 ## II.Ce que chaque directory font : 
 src/views : Ce répertoire contient toutes les  pages de l'application.
+
 src/components : Ce répertoire contient tous les composants réutilisables.
+
 src/hooks : Ce répertoire contient tous les hooks authentification.
+
 src/API : Ce répertoire contient tout le code lié aux API (interfaces de programmation applicative).
+
 src/types : Ce répertoire contient tous les types TypeScript ( on a definit user et Error ).
+
 src/contexts : Ce répertoire contient tous les contextes React.
+
 src/layouts : Ce répertoire contient tous les composants de mise en page.
+
 src/guards : Ce répertoire contient tous les gardes de routes (protection des routes).
+
 Routes.tsx : Ce fichier contient toutes les routes de l'application.
+
 App.tsx : Ce fichier contient le composant racine de l'application.
 
 (inspiré du projet que on  a fait en classe mais avec beaucoup de modif )
@@ -38,7 +54,7 @@ On peut cree , update et delete les utilisateur dans la page home et on peut voi
 
 
 ## III. Contact
- pour plus d'info 
+ pour plus d'info :
 golam.tamim94@gmail.com
 
 
