@@ -58,19 +58,29 @@ class UsersApi {
     } async login(email: string, password: string): Promise<{access_token:string, user: User}> {
         const response = await this.makeRequest({
             method: 'POST',
-            url: 'https://api.escuelajs.co/api/v1/login',
+            url: 'https://api.escuelajs.co/api/v1/auth/login',
             data: {
                 email,
                 password
             }
         });
+        console.log('Response from login request:', response);
 
-        return response; // Add this line
+        if (!response.user) {
+            console.error('User object is not returned in the login response'); // car l'avatar n'apparait pas dans le top bar c'est un probleme coté api
+        }
+
+        return response;
     }
+    logout() {
+
+        localStorage.removeItem('accessToken');
+    }
+
     async getUserWithSession(accessToken:string): Promise<User> {
         return this.makeRequest({
             method: 'GET',
-            url: 'https://api.escuelajs.co/api/v1/users/me',
+            url: 'https://api.escuelajs.co/api/v1/users/profile',
             headers: {
                 Authorization: `Bearer ${accessToken}`
             }

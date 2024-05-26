@@ -36,6 +36,7 @@ const CreateUserDialog = ({open,onClose}:Props): JSX.Element => {
         onSubmit: async (values): Promise<void> => {
             await usersApi.createUser(values);
             const createdUser = await usersApi.createUser(values);
+            console.log('User created:', createdUser);
             onClose('created',createdUser as User);
         }
     });

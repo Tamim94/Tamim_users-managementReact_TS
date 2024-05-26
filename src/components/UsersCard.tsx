@@ -47,4 +47,4 @@ const UserCard = ({ user }: UserCardProps): JSX.Element => {
     );
 };
 
-export default UserCard; // Corrected export statement
+export default UserCard;

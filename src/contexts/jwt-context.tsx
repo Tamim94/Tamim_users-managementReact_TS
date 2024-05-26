@@ -3,7 +3,6 @@ import type { FC, ReactNode } from 'react';
 import { User } from '../types/User';
 import {usersApi} from "../API/users-api";
 
-
 interface State {
     isAuthenticated: boolean;
     isInitialized: boolean;
@@ -13,6 +12,7 @@ interface State {
 enum ActionType {
     INITIALIZE = 'INITIALIZE',
     LOGIN = 'LOGIN',
+    LOGOUT = 'LOGOUT',
 }
 
 type InitializeAction = {
@@ -30,7 +30,11 @@ type LoginAction = {
     }
 }
 
-type Action = InitializeAction | LoginAction;
+type LogoutAction = {
+    type: ActionType.LOGOUT;
+};
+
+type Action = InitializeAction | LoginAction | LogoutAction;
 
 type Handler = (state: State, action: any) => State;
 
@@ -60,21 +64,29 @@ const handlers: Record<ActionType, Handler> = {
             user
         };
     },
+    LOGOUT: (state: State): State => ({
+        ...state,
+        isAuthenticated: false,
+        user: null,
+    }),
 }
 
 const reducer = (state: State, action: Action): State =>
     handlers[action.type] ? handlers[action.type](state, action) : state;
 
-export interface AuthContextValue extends State{
+export interface AuthContextValue extends State {
     login:(email:string,password:string)=>Promise<void>;
+    logout:()=>void;
 }
+
 export const AuthContext = createContext<AuthContextValue>({
     ...initialState,
     login: ()=>Promise.resolve(),
+    logout:()=>Promise.resolve(),
 });
 
 interface AuthProviderProps {
-    children: React.ReactNode;
+    children: ReactNode;
 }
 
 export const AuthProvider: FC<AuthProviderProps> = ({ children }) => {
@@ -83,24 +95,27 @@ export const AuthProvider: FC<AuthProviderProps> = ({ children }) => {
     const initialize = useCallback(async () => {
         const accessToken = globalThis.localStorage.getItem('accessToken');
         if(accessToken){
-            const user = JSON.parse(accessToken);
+
+            const user = await usersApi.getUserWithSession(accessToken);
             dispatch({
                 type: ActionType.INITIALIZE,
                 payload: {
                     isAuthenticated: true,
-                    user:null //add logged user
+                    user
                 }
             });
-
-        }else{
+            console.log('Initialized user:', user);
+        } else {
             dispatch({
                 type: ActionType.INITIALIZE,
                 payload: {
                     isAuthenticated: false,
-                    user: null,
+                    user: null
                 }
             });
+            console.log('No user to initialize');
         }
+
     }, [dispatch]);
 
     useEffect(() => {
@@ -109,7 +124,9 @@ export const AuthProvider: FC<AuthProviderProps> = ({ children }) => {
 
     const login = useCallback(async (email: string, password: string) => {
         try {
+            console.log('Login called with email:', email, 'and password:', password);
             const response = await usersApi.login(email, password);
+            console.log('Response from login request:', response);
             if (response.access_token) {
                 globalThis.localStorage.setItem('accessToken',response.access_token);
                 dispatch({
@@ -118,21 +135,32 @@ export const AuthProvider: FC<AuthProviderProps> = ({ children }) => {
                         user: response.user
                     }
                 });
+                console.log('Logged in user:', response.user);
+            } else {
+                throw new Error("User Login Failed! Check credentials and try again. Else create a account if you don't have one !");
             }
         } catch (error) {
             console.error('Error logging in:', error);
+            throw error;
         }
+    }, [dispatch]);
+
+    const logout = useCallback(() => {
+        globalThis.localStorage.removeItem('accessToken');
+        dispatch({
+            type: ActionType.LOGOUT
+        });
     }, [dispatch]);
 
     return (
         <AuthContext.Provider
             value={{
                 ...state,
-                login
+                login,
+                logout
             }}
         >
             {children}
         </AuthContext.Provider>
     );
 };
-export const AuthConsumer = AuthContext.Consumer;

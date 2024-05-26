@@ -12,6 +12,8 @@ import Button from "@mui/material/Button";
 import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
 import AdbIcon from "@mui/icons-material/Adb";
+import { useAuth } from "../../hooks/use-auth";
+import {useLocation, useNavigate} from "react-router-dom";
 
 const pages = ['Home', 'About', 'Contact'];
 const settings = ['Profile', 'Settings', 'Logout'];
@@ -19,6 +21,10 @@ const settings = ['Profile', 'Settings', 'Logout'];
 const TopBar = () => {
     const [anchorElNav, setAnchorElNav] = React.useState(null);
     const [anchorElUser, setAnchorElUser] = React.useState(null);
+    const location = useLocation();
+    const { user } = useAuth();
+    const { isAuthenticated, logout } = useAuth();
+
 
     const handleOpenNavMenu = (event: React.MouseEvent<HTMLButtonElement>) => {
 
@@ -32,14 +38,40 @@ const TopBar = () => {
         setAnchorElNav(null);
     };
 
+    const handlePageChange = (page: string) => {
+        handleCloseNavMenu();
+        switch (page) {
+            case 'Home':
+                navigate('/users');
+                break;
+            case 'About':
+                navigate('/about');
+                break;
+            case 'Contact':
+                navigate('/contact');
+                break;
+            default:
+                break;
+        }
+    };
+
 
     const handleCloseUserMenu = () => {
         setAnchorElUser(null);
     };
 
+    const navigate = useNavigate();
+
+    const handleLogout = async () => {
+        await logout();
+        navigate('/login');
+    };
+
     const AppBarStyle = {
         backgroundColor: '#8B0000', // Dark red color (like maroon)
     };
+
+
     return (
         <AppBar position="sticky" style={AppBarStyle}>
         <Container maxWidth="xl">
@@ -118,11 +150,28 @@ const TopBar = () => {
 >
     LOGO
     </Typography>
-    <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
+
+            {isAuthenticated && (
+                <Button
+                    color="inherit"
+                    variant="outlined"
+                    onClick={handleLogout}
+                >
+                    Logout
+                </Button>
+            )}
+
+
+
+
+
+
+
+<Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
     {pages.map((page) => (
         <Button
             key={page}
-        onClick={handleCloseNavMenu}
+            onClick={() => handlePageChange(page)}
         sx={{ my: 2, color: 'white', display: 'block' }}
     >
         {page}
@@ -133,7 +182,7 @@ const TopBar = () => {
     <Box sx={{ flexGrow: 0 }}>
     <Tooltip title="Open settings">
     <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-    <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
+        <Avatar alt={user?.name} src={user?.avatar } />
         </IconButton>
         </Tooltip>
         <Menu
@@ -164,5 +213,6 @@ const TopBar = () => {
     </AppBar>
 );
 };
+
 
 export default TopBar;
