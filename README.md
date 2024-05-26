@@ -15,11 +15,14 @@ API : https://fakeapi.platzi.com/en/rest/users/
 
 Library : material-ui/core // idk what version tho 
 
-Pour installer le projet si vous etes sur IntelliJ IDEA, il suffit de cloner le projet et de l'ouvrir avec IntelliJ IDEA en appuyant sur get projet from VCS et le lien du lien repo dessus pour le cloner / pull. 
+Pour installer le projet si vous etes sur IntelliJ IDEA, il suffit de cloner le projet et de l'ouvrir avec IntelliJ IDEA en appuyant sur get projet from VCS et le lien du lien repo dessus pour le cloner / pull.
+
 Dans le cas de VSCode il faudra pull ou cloner le projet de façon traditionnelle dans le terminal.
 
 Ensuite vous normalement vos verrez des erreurs ce qui est normal il faudra aller sur la dependance / Tamim_users-managementReact_TS/ et faire un npm install pour installer les dependances du projet (react node module etc ).
+
 Vous pourrez lancer le projet avec npm start.
+
 Vous pourrez voir le projet sur localhost:3000. ( le port par default de react ) si vous avez des probleme de port vous pouvez faire un show netstate sur powershell et kill le proccessus qui utilise le port 3000 (ou tout simplement react vous proposera d'utilisait un autre port ).
 
 
@@ -47,9 +50,13 @@ App.tsx : Ce fichier contient le composant racine de l'application.
 (inspiré du projet que on  a fait en classe mais avec beaucoup de modif )
 
 Le projet est un projet de gestion d'utilisateurs avec une API fake qui permet de faire des requetes GET, POST, PUT et DELETE sur des utilisateurs.
+
 J'ai fait un aussi une page About contact qui sont accessible logged off mais pour consulter les users (page home) il faut etre logged in no matter what .
+
 Pour cela j'ai ajouter un fonction de creation dans la page de login pour creer un user pour se connecter (please remember ce que vous crée car j'ai pas reussi a faire le system de log automatique après la creation de compte ).
+
 J'ai essayé de mettre l'image et nom de l'utilisateur dans le TopBar mais j'ai pas reussi a le faire fonctionner (j'ai pas reussi a recuperer les données de l'utilisateur pour les afficher dans le Appbar due aux limitation de l'api que j'ai decouvert en mettant des console log partout dans la validation login -_-).
+
 On peut cree , update et delete les utilisateur dans la page home et on peut voir les details de chaque utilisateur en cliquant sur un user .
 
 
