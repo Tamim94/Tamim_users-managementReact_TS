@@ -22,13 +22,13 @@ const About: React.FC = () => {
                 <Paper elevation={3} sx={{ padding: '2rem', width: '100%', maxWidth: '800px' }}>
                     <Grid container spacing={3} justifyContent="center" alignItems="center">
                     <Typography variant="h4" gutterBottom align="center">
-                            Welcome to Wanted
+                            Welcome to Wanted ( by Tamim student in Web & Mobile Development  )
                         </Typography>
                         <Typography variant="body1" paragraph align="center">
-                            We're a passionate team dedicated to revolutionizing the way you discover and share opportunities.
+                          J'ai crée ce projet avec un API sur https://fakeapi.platzi.com/en/rest/users/ pour la gestion des utilisateurs.
                         </Typography>
                         <Typography variant="body1" paragraph align="center">
-                            **Our Mission:** To empower individuals and organizations to find the perfect match for their unique needs. Whether you're seeking a new career, looking to fill a position, or simply exploring your options, Wanted is your go-to platform.
+                           A partir de site web Wanted, vous pouvez créer un compte, se connecter, voir les utilisateurs, les modifier, les supprimer et les ajouter. Mais pour ça il faudra d'abord log in (j'ai mis un exemple fonctionnel normalement si vous voulez pas crée de user) Le contact page ne fais rien je l'ai juste aujouter pour faire beau.
                         </Typography>
 
                         <Typography variant="h6" gutterBottom align="center" sx={{ mt: 3 }}>

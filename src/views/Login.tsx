@@ -90,6 +90,30 @@ const Login = (): JSX.Element => {
             >
               Login
             </Typography>
+            <Typography
+                variant="h6"
+                color="textSecondary"
+            >
+              Par exemple :
+            </Typography>
+            <Typography
+                variant="h6"
+                color="textSecondary"
+            >
+              email: hello@tam.com
+            </Typography>
+            <Typography
+                variant="h6"
+                color="textSecondary"
+            >
+           password: 123456777
+            </Typography>
+            <Typography
+                variant="h6"
+                color="textSecondary"
+            >
+            sinon vous pouvez créer un compte!
+            </Typography>
             <Box mt={5}>
               <form onSubmit={handleSubmit}>
                 <TextField
