@@ -88,7 +88,7 @@ const Login = (): JSX.Element => {
                 variant="h4"
                 color="textPrimary"
             >
-              Login
+              Login (prend du temps a load en raison de l'hebergeur environ 10s)
             </Typography>
             <Typography
                 variant="h6"
