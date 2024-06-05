@@ -25,7 +25,7 @@ const About: React.FC = () => {
                             Welcome to Wanted ( by Tamim student in Web & Mobile Development  )
                         </Typography>
                         <Typography variant="body1" paragraph align="center">
-                          J'ai crée ce projet avec un API sur https://fakeapi.platzi.com/en/rest/users/ pour la gestion des utilisateurs.
+                          J'ai crée ce projet avec un API sur https://fakeapi.platzi.com/en/rest/users/ pour la gestion des utilisateurs. Mon github : https://github.com/Tamim94 , Portfolio : tamimg-portfolio.web.app
                         </Typography>
                         <Typography variant="body1" paragraph align="center">
                            A partir de site web Wanted, vous pouvez créer un compte, se connecter, voir les utilisateurs, les modifier, les supprimer et les ajouter. Mais pour ça il faudra d'abord log in (j'ai mis un exemple fonctionnel normalement si vous voulez pas crée de user) Le contact page ne fais rien je l'ai juste aujouter pour faire beau.
