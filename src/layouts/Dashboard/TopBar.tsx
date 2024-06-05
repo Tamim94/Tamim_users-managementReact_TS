@@ -13,7 +13,7 @@ import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
 import AdbIcon from "@mui/icons-material/Adb";
 import { useAuth } from "../../hooks/use-auth";
-import {useLocation, useNavigate} from "react-router-dom";
+import { useNavigate} from "react-router-dom";
 
 const pages = ['Home', 'About', 'Contact'];
 const settings = ['Profile', 'Settings', 'Logout'];
@@ -21,7 +21,7 @@ const settings = ['Profile', 'Settings', 'Logout'];
 const TopBar = () => {
     const [anchorElNav, setAnchorElNav] = React.useState(null);
     const [anchorElUser, setAnchorElUser] = React.useState(null);
-    const location = useLocation();
+
     const { user } = useAuth();
     const { isAuthenticated, logout } = useAuth();
 

@@ -9,7 +9,7 @@ import Grid from '@mui/material/Grid';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import Typography from "@mui/material/Typography";
-import {Error} from "../types/Error";
+
 import {usersApi} from "../API/users-api";
 import {User} from "../types/User";
 

@@ -1,21 +1,12 @@
-
-import React, { useEffect, useCallback, useState } from 'react'; // Added useState import
-import { Grid, Box, CardContent, Typography } from '@mui/material';
+import React, { useEffect, useCallback, useState } from 'react';
+import { Grid, Box } from '@mui/material';
 import UsersCard from '../components/UsersCard';
 import { usersApi } from "../API/users-api";
 import {User} from "../types/User";
 import DashboardLayout from "../layouts/Dashboard";
 import Button from "@mui/material/Button";
-import {Create} from "@mui/icons-material";
 import CreateUserDialog from "../components/CreateUserDialog";
 
-
-interface UserCardProps {
-    user: User;
-}
-const handleCreateUser = () => {
-    console.log("Create user");
-};
 const Users = (): JSX.Element => {
     const [users, setUsers] = useState<User[]>([]);
     const [OpenUserDialog,setOpenUserDialog]=useState<boolean>(false);
@@ -25,8 +16,6 @@ const Users = (): JSX.Element => {
     const handleCloseUserDialog=(action?:string,user?:User)=>{
         if(action==='created' && user){
             setUsers([...users,user as User]);
-
-
         }
         setOpenUserDialog(false);
     }
@@ -46,7 +35,7 @@ const Users = (): JSX.Element => {
 
     return (
         <DashboardLayout>
-            < Box   sx={{
+            <Box sx={{
                 backgroundImage: 'linear-gradient(to right, blue, white, red)',
                 backgroundSize: '100% 100%',
                 backgroundRepeat: 'no-repeat',
@@ -56,16 +45,15 @@ const Users = (): JSX.Element => {
                     <Grid item>
                         <Grid item container md={8}
                               spacing={2}
-                        display={"flex"}
-                        justifyContent={"center"}>
+                              display={"flex"}
+                              justifyContent={"center"}>
                             <Grid item container
-                            md={12}xs={12}
-                            display={"flex"}
-                            justifyContent={"center"}>
+                                  md={12}xs={12}
+                                  display={"flex"}
+                                  justifyContent={"center"}>
                                 <Button
                                     variant="contained"
                                     onClick={handleOpenUserDialog}
-
                                     sx={{ backgroundColor: "red" }}
                                 >
                                     Create
@@ -73,7 +61,7 @@ const Users = (): JSX.Element => {
                             </Grid>
 
                             {users.map((user, index) => (
-                                <Grid item key={user.id}> {}
+                                <Grid item key={user.id}>
                                     <UsersCard user={user} />
                                 </Grid>
                             ))}
@@ -83,10 +71,7 @@ const Users = (): JSX.Element => {
                 </Grid>
             </Box>
             <CreateUserDialog open={OpenUserDialog} onClose={handleCloseUserDialog}/>
-
-
         </DashboardLayout>
-
     );
 };
 

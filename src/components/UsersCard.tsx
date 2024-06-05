@@ -1,9 +1,9 @@
 
 import React from 'react';
 import { Card, CardContent, Typography, Avatar, Stack } from "@mui/material";
-import { common } from "@mui/material/colors";
+
 import { User } from "../types/User";
-import {Link, useNavigate} from "react-router-dom";
+import {useNavigate} from "react-router-dom";
 interface UserCardProps {
     user: User;
 }

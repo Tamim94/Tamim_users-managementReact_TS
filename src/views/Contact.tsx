@@ -2,13 +2,9 @@ import React, {useState} from 'react';
 import DashboardLayout from '../layouts/Dashboard';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
-import TopBar from "../layouts/Dashboard/TopBar";
-import {AlertProps, Button, Paper, TextField} from '@mui/material';
-import MuiAlert from '@mui/material/Alert';
+import {Button, Paper, Snackbar, TextField} from '@mui/material';
 
-const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(props, ref) {
-    return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
-});
+
 
 
 const Contact: React.FC = () => {
@@ -95,6 +91,12 @@ const Contact: React.FC = () => {
                 </form>
                     </Paper>
             </Box>
+            <Snackbar
+                open={snackbarOpen}
+                autoHideDuration={6000}
+                onClose={() => setSnackbarOpen(false)}
+                message="Form submitted successfully"
+            />
         </DashboardLayout>
     );
 }

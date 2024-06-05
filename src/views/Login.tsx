@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, {useState, useEffect, useCallback} from 'react';
 import Box from "@mui/material/Box";
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
@@ -49,11 +49,17 @@ const Login = (): JSX.Element => {
 
   const { handleSubmit, handleChange } = formik;
 
-  useEffect(() => {
+  // Use useCallback to memoize the navigate function
+  const memoizedNavigate = useCallback(() => {
     if (isAuthenticated) {
       navigate('/users');
     }
-  }, [isAuthenticated]);
+  }, [isAuthenticated, navigate]);
+
+  // Use memoizedNavigate in the dependency array of useEffect
+  useEffect(() => {
+    memoizedNavigate();
+  }, [memoizedNavigate]);
 
   const [openCreateUserDialog, setOpenCreateUserDialog] = useState(false);
   return (

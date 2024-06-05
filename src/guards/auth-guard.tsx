@@ -19,12 +19,12 @@ export const AuthGuard: FC<AuthGuardProps> = (props) => {
         } else {
             setChecked(true);
         }
-    }, [isAuthenticated]);
+    }, [isAuthenticated, navigate]); // Add navigate to the dependency array
 
     // Only check on mount, this allows us to redirect the user manually when auth state changes
     useEffect(() => {
         check();
-    }, []);
+    }, [check]); // Add check to the dependency array
 
     if (!checked) {
         return null;
