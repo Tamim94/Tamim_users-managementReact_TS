@@ -6,6 +6,7 @@ import {User} from "../types/User";
 import DashboardLayout from "../layouts/Dashboard";
 import Button from "@mui/material/Button";
 import CreateUserDialog from "../components/CreateUserDialog";
+import {CreateUserError} from "../types/CreateUserError";
 
 const Users = (): JSX.Element => {
     const [users, setUsers] = useState<User[]>([]);
@@ -13,8 +14,8 @@ const Users = (): JSX.Element => {
     const handleOpenUserDialog=()=>{
         setOpenUserDialog(true);
     }
-    const handleCloseUserDialog=(action?:string,user?:User)=>{
-        if(action==='created' && user){
+    const handleCloseUserDialog=(action?:string,user?:User | CreateUserError | undefined)=>{
+        if(action==='created' && user && !('message' in user)){
             setUsers([...users,user as User]);
         }
         setOpenUserDialog(false);

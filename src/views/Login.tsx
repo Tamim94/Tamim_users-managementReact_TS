@@ -88,7 +88,7 @@ const Login = (): JSX.Element => {
                 variant="h4"
                 color="textPrimary"
             >
-              Login (prend du temps a load en raison de l'hebergeur environ 10s)
+              Login (Créer un compte si mon login  dans l'exemple ne marche pas car l'api a probablement changé depuis)
             </Typography>
             <Typography
                 variant="h6"

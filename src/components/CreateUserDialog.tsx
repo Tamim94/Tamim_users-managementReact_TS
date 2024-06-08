@@ -6,53 +6,92 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
 import Button from '@mui/material/Button';
 import Grid from '@mui/material/Grid';
-import { useFormik } from 'formik';
+import {useFormik} from 'formik';
 import * as Yup from 'yup';
 import Typography from "@mui/material/Typography";
 
 import {usersApi} from "../API/users-api";
 import {User} from "../types/User";
+import {useAuth} from "../hooks/use-auth";
+import {CreateUserError} from "../types/CreateUserError";
 
+type UserOrErrorMessage = User | { message: string };
 interface Props {
     open: boolean;
-    onClose:(action ?: string,user?:User)=>void;
+    onClose: (action?: string, user?: UserOrErrorMessage) => void;
 }
 
-const CreateUserDialog = ({open,onClose}:Props): JSX.Element => {
-
+const CreateUserDialog = ({open, onClose}: Props): JSX.Element => {
+    const {login} = useAuth();
     const formik = useFormik({
         initialValues: {
             name: '',
             email: '',
             password: '',
-            avatar: '',
+            avatar: 'https://robohash.org/mail@ashallendesign.co.uk',
         },
         validationSchema: Yup.object({
             name: Yup.string().max(100).required('required namee'),
             email: Yup.string().email().required(),
-            password: Yup.string().min(6).required(),
+            password: Yup.string()
+                .min(6)
+                .matches(/^[a-zA-Z0-9]*$/, "Password must contain only letters and numbers (car l'api ne semble pas accepter les caracteres speciaux)")
+                .required(),
             avatar: Yup.string().required(),
         }),
         onSubmit: async (values): Promise<void> => {
-            await usersApi.createUser(values);
-            const createdUser = await usersApi.createUser(values);
-            console.log('User created:', createdUser);
-            onClose('created',createdUser as User);
-        }
-    });
+            try {
+                const user = await usersApi.createUser(values);
 
-    const { handleSubmit, handleChange } = formik;
+                if ('message' in user) {
+                    onClose('created', {message: user.message});
+                } else {
+                    onClose('created', user);
+                    await login(values.email, values.password);
+                }
+            } catch (error) {
+                console.error('Error creating user:', error);
+            }
+        },
+    });
+    const {handleSubmit, handleChange} = formik;
 
     return (
         <Dialog
             open={open}
-            onClose={()=>onClose}
+            onClose={() => onClose}
             fullWidth={true}
         >
-            <DialogTitle>Create User</DialogTitle>
+            <DialogTitle>Create User <Typography
+                variant="h6"
+                color="textSecondary"
+            >
+                Par exemple :
+            </Typography>
+                <Typography
+                    variant="h6"
+                    color="textSecondary"
+                >
+                    nom: test455
+                </Typography>
+
+                <Typography
+                    variant="h6"
+                    color="textSecondary"
+                >
+                    email: hello@tam.com
+                </Typography>
+                <Typography
+                    variant="h6"
+                    color="textSecondary"
+                >
+                    password: 123456777
+                </Typography></DialogTitle>
+
+
             <DialogContent>
                 <form
-                    id ="createUserForm"
+                    id="createUserForm"
                     onSubmit={handleSubmit}>
                     <Grid container spacing={4}>
                         <Grid item xs={12} md={12}>
@@ -73,7 +112,7 @@ const CreateUserDialog = ({open,onClose}:Props): JSX.Element => {
                                 variant="outlined"
                                 value={formik.values.name}
                                 onChange={handleChange}
-                                error={ formik.touched.name && Boolean(formik.errors.name)
+                                error={formik.touched.name && Boolean(formik.errors.name)
                                 }
                                 helperText={formik.touched.name && formik.errors.name}
                             />
@@ -98,7 +137,7 @@ const CreateUserDialog = ({open,onClose}:Props): JSX.Element => {
                                 value={formik.values.email}
                                 onChange={handleChange}
                                 error={
-                                formik.touched.email && Boolean(formik.errors.email)
+                                    formik.touched.email && Boolean(formik.errors.email)
                                 }
                                 helperText={formik.touched.email && formik.errors.email}
                             />
@@ -123,9 +162,9 @@ const CreateUserDialog = ({open,onClose}:Props): JSX.Element => {
                                 value={formik.values.password}
                                 variant="outlined"
                                 onChange={handleChange}
-                             error={ formik.touched.password && Boolean(formik.errors.password)
-                            }
-                            helperText={formik.touched.password && formik.errors.password}
+                                error={formik.touched.password && Boolean(formik.errors.password)
+                                }
+                                helperText={formik.touched.password && formik.errors.password}
                             />
                         </Grid>
 
@@ -147,7 +186,7 @@ const CreateUserDialog = ({open,onClose}:Props): JSX.Element => {
                                 variant="outlined"
                                 value={formik.values.avatar}
                                 onChange={handleChange}
-                                error={ formik.touched.avatar && Boolean(formik.errors.avatar)
+                                error={formik.touched.avatar && Boolean(formik.errors.avatar)
                                 }
                                 helperText={formik.touched.avatar && formik.errors.avatar}
                             />
@@ -157,8 +196,9 @@ const CreateUserDialog = ({open,onClose}:Props): JSX.Element => {
                 </form>
             </DialogContent>
             <DialogActions>
-                <Button variant={'contained'} sx={{ backgroundColor: "red" }} onClick={() => onClose()}>Cancel</Button>
-                <Button type="submit" form={"createUserForm"} variant='contained'  sx={{ backgroundColor: "blue" }}>Create User </Button>
+                <Button variant={'contained'} sx={{backgroundColor: "red"}} onClick={() => onClose()}>Cancel</Button>
+                <Button type="submit" form={"createUserForm"} variant='contained' sx={{backgroundColor: "blue"}}>Create
+                    User </Button>
             </DialogActions>
         </Dialog>
     );
