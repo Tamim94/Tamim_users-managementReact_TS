@@ -13,7 +13,7 @@ import Typography from "@mui/material/Typography";
 import {usersApi} from "../API/users-api";
 import {User} from "../types/User";
 import {useAuth} from "../hooks/use-auth";
-import {CreateUserError} from "../types/CreateUserError";
+
 
 type UserOrErrorMessage = User | { message: string };
 interface Props {
